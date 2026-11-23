@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ hotel.name }} | StayEase</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="container nav-container">
+
+            <a href="{{ url_for('home') }}" class="brand">
+                Stay<span>Ease</span><small>.</small>
+            </a>
+
+            <nav class="nav-links">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('hotel.hotel_list') }}" class="active">
+                    Explore Hotels
+                </a>
+
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('booking.my_bookings') }}">
+                        My Bookings
+                    </a>
+                {% endif %}
+            </nav>
+
+            <div class="nav-actions">
+
+                {% if current_user.is_authenticated %}
+
+                    <span class="welcome-user">
+                        Hello, {{ current_user.name }}
+                    </span>
+
+                    <form action="{{ url_for('auth.logout') }}"
+                          method="POST"
+                          class="inline-form">
+                        <button type="submit" class="btn btn-outline">
+                            Logout
+                        </button>
+                    </form>
+
+                {% else %}
+
+                    <a href="{{ url_for('auth.login') }}"
+                       class="login-link">Sign In</a>
+
+                    <a href="{{ url_for('auth.register') }}"
+                       class="btn btn-primary">Get Started</a>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Flash Messages -->
+    <div class="container flash-container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="flash-message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+    </div>
+
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb-section">
+        <div class="container">
+
+            <a href="{{ url_for('home') }}">Home</a>
+            <span>/</span>
+
+            <a href="{{ url_for('hotel.hotel_list') }}">
+                Hotels
+            </a>
+
+            <span>/</span>
+
+            <span>{{ hotel.name }}</span>
+
+        </div>
+    </section>
+
+
+    <!-- Hotel Hero -->
+    <section class="hotel-detail-hero">
+
+        {% if hotel.get('image') %}
+
+            <img
+                src="{{ hotel.get('image') }}"
+                alt="{{ hotel.name }}"
+                class="hotel-detail-image"
+            >
+
+        {% else %}
+
+            <img
+                src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600"
+                alt="Luxury hotel"
+                class="hotel-detail-image"
+            >
+
+        {% endif %}
+
+        <div class="hotel-detail-overlay"></div>
+
+        <div class="container hotel-detail-heading">
+
+            <span class="eyebrow">
+                STAYEASE COLLECTION
+            </span>
+
+            <h1>{{ hotel.name }}</h1>
+
+            <p>
+                {{ hotel.location }}
+            </p>
+
+            <span class="detail-rating">
+                ★ {{ hotel.get('rating', 'New') }} / 5
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- Hotel Information -->
+    <section class="hotel-info-section section-padding">
+
+        <div class="container hotel-info-grid">
+
+            <div class="hotel-description">
+
+                <span class="eyebrow dark-eyebrow">
+                    DISCOVER THE PROPERTY
+                </span>
+
+                <h2 class="section-title">
+                    Experience <span>comfort.</span>
+                </h2>
+
+                <p>
+                    {{ hotel.get(
+                        'description',
+                        'Discover a comfortable and memorable experience at this beautiful property.'
+                    ) }}
+                </p>
+
+
+                <!-- Amenities -->
+                <div class="amenities-section">
+
+                    <h3>Hotel Amenities</h3>
+
+                    <div class="amenities-list">
+
+                        {% for amenity in hotel.get('amenities', []) %}
+
+                            <span class="amenity-item">
+                                <span class="amenity-check">✓</span>
+                                {{ amenity }}
+                            </span>
+
+                        {% else %}
+
+                            <p>
+                                Contact the hotel for available amenities.
+                            </p>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Location Card -->
+            <aside class="hotel-location-card">
+
+                <span class="eyebrow dark-eyebrow">
+                    YOUR DESTINATION
+                </span>
+
+                <h3>{{ hotel.name }}</h3>
+
+                <p class="location-name">
+                    {{ hotel.location }}
+                </p>
+
+                <div class="location-rating">
+                    <span>★</span>
+                    {{ hotel.get('rating', 'New') }} / 5
+                </div>
+
+                <a href="#available-rooms"
+                   class="btn btn-primary location-button">
+                    Explore Available Rooms →
+                </a>
+
+            </aside>
+
+        </div>
+
+    </section>
+
+
+    <!-- Available Rooms -->
+    <section class="rooms-section section-padding"
+             id="available-rooms">
+
+        <div class="container">
+
+            <div class="section-heading-row">
+
+                <div>
+
+                    <span class="eyebrow dark-eyebrow">
+                        FIND YOUR COMFORT
+                    </span>
+
+                    <h2 class="section-title">
+                        Choose your <span>room.</span>
+                    </h2>
+
+                </div>
+
+                <p class="results-count">
+                    {{ rooms|length }} room(s) available
+                </p>
+
+            </div>
+
+
+            <div class="room-grid">
+
+                {% for room in rooms %}
+
+                    <article class="room-card">
+
+                        <div class="room-card-top">
+
+                            <span class="room-icon">⌂</span>
+
+                            <span class="room-capacity">
+                                Up to {{ room.get('capacity', 1) }} guests
+                            </span>
+
+                        </div>
+
+
+                        <div class="room-card-content">
+
+                            <h3>{{ room.name }}</h3>
+
+                            <p>
+                                {{ room.get(
+                                    'description',
+                                    'Enjoy a comfortable room designed for a relaxing stay.'
+                                ) }}
+                            </p>
+
+                            <div class="room-price">
+
+                                <strong>
+                                    ₹{{ "%.2f"|format(room.get('price', 0)|float) }}
+                                </strong>
+
+                                <span>/ night</span>
+
+                            </div>
+
+                            <a href="{{ url_for(
+                                'booking.create_booking',
+                                room_id=room.id
+                            ) }}"
+                               class="btn btn-primary room-book-button">
+
+                                Book This Room →
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                {% else %}
+
+                    <div class="empty-hotels">
+
+                        <h3>No rooms currently available.</h3>
+
+                        <p>
+                            Please check back later for available rooms.
+                        </p>
+
+                        <a href="{{ url_for('hotel.hotel_list') }}"
+                           class="btn btn-primary">
+                            Explore Other Hotels
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="container footer-content">
+
+            <div class="footer-brand">
+
+                <a href="{{ url_for('home') }}" class="brand footer-logo">
+                    Stay<span>Ease</span><small>.</small>
+                </a>
+
+                <p>
+                    Every stay deserves something special.
+                </p>
+
+            </div>
+
+            <div class="footer-links">
+
+                <a href="{{ url_for('home') }}">Home</a>
+
+                <a href="{{ url_for('hotel.hotel_list') }}">
+                    Explore Hotels
+                </a>
+
+                <a href="{{ url_for('auth.login') }}">
+                    Sign In
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="container footer-bottom">
+
+            <p>© 2026 StayEase. All rights reserved.</p>
+
+            <p>Designed for memorable stays.</p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>

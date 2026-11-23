@@ -1,0 +1,153 @@
+
+[
+    {
+        "id": "hotel-001",
+        "name": "The Grand Heritage",
+        "location": "Hyderabad, Telangana",
+        "rating": 4.9,
+        "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200",
+        "description": "Experience timeless luxury at The Grand Heritage, where elegant architecture meets exceptional hospitality. Enjoy beautifully designed rooms, premium dining, and relaxing spaces for an unforgettable stay.",
+        "amenities": ["Free Wi-Fi", "Swimming Pool", "Restaurant", "Air Conditioning", "Room Service", "Spa", "Fitness Centre", "Parking"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-002",
+        "name": "Azure Bay Resort",
+        "location": "Goa, India",
+        "rating": 4.8,
+        "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200",
+        "description": "Discover a peaceful coastal escape at Azure Bay Resort. Surrounded by beautiful scenery, this premium resort offers comfortable accommodation, refreshing facilities, and memorable guest experiences.",
+        "amenities": ["Free Wi-Fi", "Beach Access", "Swimming Pool", "Restaurant", "Air Conditioning", "Room Service", "Spa", "Parking"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-003",
+        "name": "The Royal Orchid",
+        "location": "Bengaluru, Karnataka",
+        "rating": 4.7,
+        "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200",
+        "description": "The Royal Orchid combines contemporary comfort with sophisticated hospitality. Ideal for business and leisure travellers, the hotel provides elegant accommodation and convenient premium facilities.",
+        "amenities": ["Free Wi-Fi", "Restaurant", "Conference Room", "Air Conditioning", "Room Service", "Fitness Centre", "Parking", "Laundry"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-004",
+        "name": "Mountain Vista Retreat",
+        "location": "Ooty, Tamil Nadu",
+        "rating": 4.8,
+        "image": "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1200",
+        "description": "Escape into nature at Mountain Vista Retreat. Enjoy scenic surroundings, thoughtfully designed rooms, peaceful relaxation areas, and warm hospitality in a beautiful hill destination.",
+        "amenities": ["Free Wi-Fi", "Mountain View", "Restaurant", "Room Service", "Garden", "Bonfire", "Parking", "Heating"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-005",
+        "name": "The Urban Grand",
+        "location": "Mumbai, Maharashtra",
+        "rating": 4.6,
+        "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200",
+        "description": "Enjoy a stylish city stay at The Urban Grand. Designed for modern travellers, the property features contemporary interiors, convenient amenities, and easy access to city attractions.",
+        "amenities": ["Free Wi-Fi", "Restaurant", "Air Conditioning", "Room Service", "Fitness Centre", "Business Centre", "Laundry", "Parking"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-006",
+        "name": "Serenity Palace",
+        "location": "Kochi, Kerala",
+        "rating": 4.7,
+        "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200",
+        "description": "Serenity Palace offers a relaxing stay inspired by the charm of Kerala. Experience comfortable accommodation, welcoming service, beautiful surroundings, and thoughtfully selected guest facilities.",
+        "amenities": ["Free Wi-Fi", "Swimming Pool", "Restaurant", "Air Conditioning", "Room Service", "Ayurvedic Spa", "Garden", "Parking"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-007",
+        "name": "Taj Lakeview Escape",
+        "location": "Udaipur, Rajasthan",
+        "rating": 4.9,
+        "image": "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1200",
+        "description": "Enjoy a luxurious lakeside escape with elegant architecture, beautiful views, exceptional dining, and personalized hospitality.",
+        "amenities": ["Free Wi-Fi", "Swimming Pool", "Lake View", "Restaurant", "Spa", "Room Service", "Parking"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-008",
+        "name": "Coastal Pearl Resort",
+        "location": "Visakhapatnam, Andhra Pradesh",
+        "rating": 4.7,
+        "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200",
+        "description": "A premium coastal retreat offering relaxing accommodation, beautiful surroundings, delicious cuisine, and modern resort facilities.",
+        "amenities": ["Free Wi-Fi", "Sea View", "Swimming Pool", "Restaurant", "Room Service", "Garden", "Parking"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-009",
+        "name": "The Metropolitan Suites",
+        "location": "Delhi, India",
+        "rating": 4.6,
+        "image": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200",
+        "description": "Experience modern city luxury with sophisticated interiors, premium accommodation, business facilities, and convenient city access.",
+        "amenities": ["Free Wi-Fi", "Restaurant", "Business Centre", "Fitness Centre", "Air Conditioning", "Laundry", "Parking"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-010",
+        "name": "Pinewood Mountain Resort",
+        "location": "Manali, Himachal Pradesh",
+        "rating": 4.8,
+        "image": "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1200",
+        "description": "Discover mountain hospitality with peaceful surroundings, scenic landscapes, cozy accommodation, and memorable outdoor experiences.",
+        "amenities": ["Free Wi-Fi", "Mountain View", "Restaurant", "Fireplace", "Garden", "Room Service", "Parking"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-011",
+        "name": "Coral Sands Retreat",
+        "location": "Andaman Islands, India",
+        "rating": 4.9,
+        "image": "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=1200",
+        "description": "A beautiful island-inspired retreat featuring tropical surroundings, comfortable rooms, relaxing spaces, and coastal experiences.",
+        "amenities": ["Free Wi-Fi", "Beach Access", "Sea View", "Swimming Pool", "Restaurant", "Spa", "Water Activities"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-012",
+        "name": "The Heritage Residency",
+        "location": "Jaipur, Rajasthan",
+        "rating": 4.8,
+        "image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1200",
+        "description": "Experience traditional Indian hospitality with heritage-inspired architecture, refined interiors, cultural charm, and premium guest services.",
+        "amenities": ["Free Wi-Fi", "Restaurant", "Heritage Architecture", "Swimming Pool", "Spa", "Room Service", "Parking"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-013",
+        "name": "The Crystal Grand",
+        "location": "Chennai, Tamil Nadu",
+        "rating": 4.8,
+        "image": "https://images.unsplash.com/photo-1568084680786-a84f91d1153c?w=1200",
+        "description": "Experience contemporary luxury in the heart of Chennai. Enjoy beautifully designed rooms, fine dining, premium facilities, and exceptional hospitality.",
+        "amenities": ["Free Wi-Fi", "Swimming Pool", "Restaurant", "Fitness Centre", "Air Conditioning", "Spa", "Room Service", "Parking"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-014",
+        "name": "Silver Oak Residency",
+        "location": "Pune, Maharashtra",
+        "rating": 4.7,
+        "image": "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=1200",
+        "description": "A sophisticated urban retreat offering elegant accommodation, peaceful interiors, modern facilities, and personalized guest services.",
+        "amenities": ["Free Wi-Fi", "Restaurant", "Garden", "Business Centre", "Air Conditioning", "Laundry", "Fitness Centre", "Parking"],
+        "status": "active"
+    },
+    {
+        "id": "hotel-015",
+        "name": "Emerald Valley Resort",
+        "location": "Munnar, Kerala",
+        "rating": 4.9,
+        "image": "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1200",
+        "description": "Discover a peaceful mountain escape surrounded by lush greenery and beautiful landscapes. Enjoy relaxing accommodation and warm Kerala hospitality.",
+        "amenities": ["Free Wi-Fi", "Mountain View", "Restaurant", "Swimming Pool", "Garden", "Spa", "Room Service", "Parking"],
+        "status": "active"
+    }
+]

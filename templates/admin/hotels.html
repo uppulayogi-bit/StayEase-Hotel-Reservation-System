@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Hotels | StayEase Admin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+
+            <a href="{{ url_for('home') }}" class="brand admin-brand">
+                Stay<span>Ease</span><small>.</small>
+            </a>
+
+            <div class="admin-profile">
+                <div class="admin-avatar">A</div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <span>System Manager</span>
+                </div>
+            </div>
+
+            <span class="sidebar-label">MAIN MENU</span>
+
+            <nav class="admin-nav">
+
+                <a href="{{ url_for('admin.dashboard') }}"
+                   class="admin-nav-link">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="{{ url_for('admin.manage_hotels') }}"
+                   class="admin-nav-link active">
+                    <span>⌂</span> Hotels
+                </a>
+
+                <a href="{{ url_for('admin.manage_rooms') }}"
+                   class="admin-nav-link">
+                    <span>▤</span> Rooms
+                </a>
+
+                <a href="{{ url_for('admin.manage_bookings') }}"
+                   class="admin-nav-link">
+                    <span>▣</span> Bookings
+                </a>
+
+                <a href="{{ url_for('admin.manage_customers') }}"
+                   class="admin-nav-link">
+                    <span>♙</span> Customers
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="{{ url_for('home') }}"
+                   class="admin-nav-link">
+                    <span>↗</span> View Website
+                </a>
+
+                <form action="{{ url_for('admin.admin_logout') }}"
+                      method="POST">
+
+                    <button type="submit"
+                            class="admin-logout-button">
+                        <span>⇥</span> Sign Out
+                    </button>
+
+                </form>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="admin-main">
+
+            <header class="admin-topbar">
+
+                <div>
+                    <span class="admin-date-label">
+                        PROPERTY MANAGEMENT
+                    </span>
+
+                    <h1>Hotels</h1>
+                </div>
+
+                <a href="{{ url_for('admin.add_hotel') }}"
+                   class="btn btn-primary">
+                    + Add New Hotel
+                </a>
+
+            </header>
+
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% for category, message in messages %}
+
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endwith %}
+
+
+            <!-- Page Introduction -->
+            <section class="admin-welcome">
+
+                <div>
+                    <span class="eyebrow">
+                        STAYEASE PROPERTY COLLECTION
+                    </span>
+
+                    <h2>
+                        Manage your <span>properties.</span>
+                    </h2>
+
+                    <p>
+                        Add, update, and manage the hotels displayed
+                        on your StayEase website.
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- Hotel Summary -->
+            <section class="admin-stats-grid">
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Total Hotels</span>
+                        <span class="stat-icon">⌂</span>
+                    </div>
+
+                    <strong>{{ hotels|length }}</strong>
+
+                    <span class="stat-description">
+                        Registered properties
+                    </span>
+
+                </article>
+
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Active Hotels</span>
+                        <span class="stat-icon">✓</span>
+                    </div>
+
+                    <strong>
+                        {{ hotels|selectattr('status', 'equalto', 'active')|list|length }}
+                    </strong>
+
+                    <span class="stat-description">
+                        Currently listed properties
+                    </span>
+
+                </article>
+
+            </section>
+
+
+            <!-- Hotel Table -->
+            <section class="admin-panel recent-bookings-panel">
+
+                <div class="admin-panel-heading">
+
+                    <div>
+                        <span class="panel-label">
+                            PROPERTY DIRECTORY
+                        </span>
+
+                        <h2>All Hotels</h2>
+                    </div>
+
+                    <a href="{{ url_for('admin.add_hotel') }}"
+                       class="text-link">
+                        + Add Property
+                    </a>
+
+                </div>
+
+
+                <div class="admin-table-wrapper">
+
+                    <table class="admin-table">
+
+                        <thead>
+                            <tr>
+                                <th>Hotel</th>
+                                <th>Location</th>
+                                <th>Rating</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for hotel in hotels %}
+
+                                <tr>
+
+                                    <td>
+                                        <div class="admin-hotel-cell">
+
+                                            {% if hotel.get('image') %}
+
+                                                <img
+                                                    src="{{ hotel.image }}"
+                                                    alt="{{ hotel.name }}"
+                                                    class="admin-hotel-thumbnail"
+                                                >
+
+                                            {% else %}
+
+                                                <div class="admin-hotel-thumbnail-placeholder">
+                                                    H
+                                                </div>
+
+                                            {% endif %}
+
+                                            <div>
+                                                <strong>{{ hotel.name }}</strong>
+                                                <small>ID: {{ hotel.id[:8] }}</small>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        {{ hotel.location }}
+                                    </td>
+
+                                    <td>
+                                        <span class="hotel-rating-text">
+                                            ★ {{ hotel.get('rating', 0) }}
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <span class="status-badge {{ hotel.get('status', 'active') }}">
+                                            {{ hotel.get('status', 'active')|title }}
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <div class="admin-action-buttons">
+
+                                            <a href="{{ url_for(
+                                                'admin.edit_hotel',
+                                                hotel_id=hotel.id
+                                            ) }}"
+                                               class="btn btn-small btn-outline">
+                                                Edit
+                                            </a>
+
+                                            {% if hotel.get('status', 'active') == 'active' %}
+
+                                                <form
+                                                    method="POST"
+                                                    action="{{ url_for(
+                                                        'admin.delete_hotel',
+                                                        hotel_id=hotel.id
+                                                    ) }}"
+                                                    onsubmit="return confirm('Are you sure you want to deactivate this hotel?');"
+                                                >
+
+                                                    <button type="submit"
+                                                            class="btn btn-small btn-danger-outline">
+                                                        Deactivate
+                                                    </button>
+
+                                                </form>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            {% else %}
+
+                                <tr>
+                                    <td colspan="5" class="table-empty">
+                                        No hotels have been added yet.
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <footer class="admin-footer">
+                © 2026 StayEase Admin Panel. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

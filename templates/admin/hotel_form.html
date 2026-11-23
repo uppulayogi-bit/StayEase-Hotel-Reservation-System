@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% if hotel %}Edit Hotel{% else %}Add Hotel{% endif %} | StayEase Admin</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+
+            <a href="{{ url_for('home') }}" class="brand admin-brand">
+                Stay<span>Ease</span><small>.</small>
+            </a>
+
+            <div class="admin-profile">
+                <div class="admin-avatar">A</div>
+                <div>
+                    <strong>Administrator</strong>
+                    <span>System Manager</span>
+                </div>
+            </div>
+
+            <span class="sidebar-label">MAIN MENU</span>
+
+            <nav class="admin-nav">
+
+                <a href="{{ url_for('admin.dashboard') }}"
+                   class="admin-nav-link">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="{{ url_for('admin.manage_hotels') }}"
+                   class="admin-nav-link active">
+                    <span>⌂</span> Hotels
+                </a>
+
+                <a href="{{ url_for('admin.manage_rooms') }}"
+                   class="admin-nav-link">
+                    <span>▤</span> Rooms
+                </a>
+
+                <a href="{{ url_for('admin.manage_bookings') }}"
+                   class="admin-nav-link">
+                    <span>▣</span> Bookings
+                </a>
+
+                <a href="{{ url_for('admin.manage_customers') }}"
+                   class="admin-nav-link">
+                    <span>♙</span> Customers
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="{{ url_for('home') }}"
+                   class="admin-nav-link">
+                    <span>↗</span> View Website
+                </a>
+
+                <form action="{{ url_for('admin.admin_logout') }}"
+                      method="POST">
+
+                    <button type="submit"
+                            class="admin-logout-button">
+                        <span>⇥</span> Sign Out
+                    </button>
+
+                </form>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="admin-main">
+
+            <header class="admin-topbar">
+
+                <div>
+                    <span class="admin-date-label">
+                        PROPERTY MANAGEMENT
+                    </span>
+
+                    <h1>
+                        {% if hotel %}
+                            Edit Hotel
+                        {% else %}
+                            Add New Hotel
+                        {% endif %}
+                    </h1>
+                </div>
+
+                <a href="{{ url_for('admin.manage_hotels') }}"
+                   class="btn btn-outline">
+                    ← Back to Hotels
+                </a>
+
+            </header>
+
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% for category, message in messages %}
+
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endwith %}
+
+
+            <!-- Form Introduction -->
+            <section class="admin-welcome">
+
+                <div>
+                    <span class="eyebrow">
+                        STAYEASE PROPERTY COLLECTION
+                    </span>
+
+                    <h2>
+                        {% if hotel %}
+                            Update your <span>property.</span>
+                        {% else %}
+                            Add a new <span>property.</span>
+                        {% endif %}
+                    </h2>
+
+                    <p>
+                        Enter the hotel information that customers
+                        will see on your website.
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- Hotel Form -->
+            <section class="admin-panel admin-form-panel">
+
+                <div class="admin-panel-heading">
+
+                    <div>
+                        <span class="panel-label">
+                            HOTEL INFORMATION
+                        </span>
+
+                        <h2>Property Details</h2>
+                    </div>
+
+                </div>
+
+
+                <form method="POST"
+                      action="{% if hotel %}{{ url_for('admin.edit_hotel', hotel_id=hotel.id) }}{% else %}{{ url_for('admin.add_hotel') }}{% endif %}"
+                      class="admin-form">
+
+                    <div class="form-group">
+
+                        <label for="name">Hotel Name *</label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="form-control"
+                            value="{{ hotel.name if hotel else '' }}"
+                            placeholder="Example: The Grand Palace"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="location">Hotel Location *</label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            class="form-control"
+                            value="{{ hotel.location if hotel else '' }}"
+                            placeholder="Example: Hyderabad, India"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="rating">Hotel Rating *</label>
+
+                        <input
+                            type="number"
+                            id="rating"
+                            name="rating"
+                            class="form-control"
+                            value="{{ hotel.rating if hotel else '4.5' }}"
+                            min="0"
+                            max="5"
+                            step="0.1"
+                            required
+                        >
+
+                        <small class="field-hint">
+                            Enter a rating between 0 and 5.
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="image">Hotel Image URL</label>
+
+                        <input
+                            type="url"
+                            id="image"
+                            name="image"
+                            class="form-control"
+                            value="{{ hotel.image if hotel else '' }}"
+                            placeholder="https://example.com/hotel-image.jpg"
+                        >
+
+                        <small class="field-hint">
+                            Enter a publicly accessible image URL.
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="description">Hotel Description *</label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            class="form-control"
+                            rows="5"
+                            placeholder="Describe the hotel, its atmosphere, and guest experience..."
+                            required
+                        >{{ hotel.description if hotel else '' }}</textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="amenities">Hotel Amenities</label>
+
+                        <input
+                            type="text"
+                            id="amenities"
+                            name="amenities"
+                            class="form-control"
+                            value="{{ hotel.amenities|join(', ') if hotel else '' }}"
+                            placeholder="WiFi, Swimming Pool, Restaurant, Parking"
+                        >
+
+                        <small class="field-hint">
+                            Separate each amenity with a comma.
+                        </small>
+
+                    </div>
+
+
+                    <div class="admin-form-actions">
+
+                        <a href="{{ url_for('admin.manage_hotels') }}"
+                           class="btn btn-outline">
+                            Cancel
+                        </a>
+
+                        <button type="submit"
+                                class="btn btn-primary">
+
+                            {% if hotel %}
+                                Save Changes →
+                            {% else %}
+                                Add Hotel →
+                            {% endif %}
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <footer class="admin-footer">
+                © 2026 StayEase Admin Panel. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

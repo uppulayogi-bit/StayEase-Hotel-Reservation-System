@@ -1,0 +1,9 @@
+[
+    {
+        "id": "185a8c38-938f-4c2d-bd84-7fdd8fc6e7dc",
+        "name": "uppula yogeshwar",
+        "email": "uppulayogi@gmail.com",
+        "password": "scrypt:32768:8:1$fNYvImqBYaxcOkbr$646a8f57948b1d89babf096ea428d0af693073c1e5dda826ea728d3178d2ae0223815ea02b7ed2ff9b7b52c1c131f54da633fabaa27ba32fb4b0255a9b41e132",
+        "role": "customer"
+    }
+]

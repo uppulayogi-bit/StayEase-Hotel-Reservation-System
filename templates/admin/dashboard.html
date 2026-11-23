@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | StayEase</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+
+            <a href="{{ url_for('home') }}" class="brand admin-brand">
+                Stay<span>Ease</span><small>.</small>
+            </a>
+
+            <div class="admin-profile">
+
+                <div class="admin-avatar">A</div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <span>System Manager</span>
+                </div>
+
+            </div>
+
+
+            <span class="sidebar-label">MAIN MENU</span>
+
+            <nav class="admin-nav">
+
+                <a href="{{ url_for('admin.dashboard') }}"
+                   class="admin-nav-link active">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="{{ url_for('admin.manage_hotels') }}"
+                   class="admin-nav-link">
+                    <span>⌂</span> Hotels
+                </a>
+
+                <a href="{{ url_for('admin.manage_rooms') }}"
+                   class="admin-nav-link">
+                    <span>▤</span> Rooms
+                </a>
+
+                <a href="{{ url_for('admin.manage_bookings') }}"
+                   class="admin-nav-link">
+                    <span>▣</span> Bookings
+                </a>
+
+                <a href="{{ url_for('admin.manage_customers') }}"
+                   class="admin-nav-link">
+                    <span>♙</span> Customers
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="{{ url_for('home') }}"
+                   class="admin-nav-link">
+                    <span>↗</span> View Website
+                </a>
+
+                <form action="{{ url_for('admin.admin_logout') }}"
+                      method="POST">
+
+                    <button type="submit"
+                            class="admin-logout-button">
+                        <span>⇥</span> Sign Out
+                    </button>
+
+                </form>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="admin-main">
+
+            <!-- Top Header -->
+            <header class="admin-topbar">
+
+                <div>
+                    <span class="admin-date-label">
+                        STAYEASE MANAGEMENT
+                    </span>
+
+                    <h1>Dashboard</h1>
+                </div>
+
+                <div class="admin-topbar-right">
+
+                    <span class="admin-status-indicator"></span>
+
+                    <span>System Overview</span>
+
+                </div>
+
+            </header>
+
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% for category, message in messages %}
+
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endwith %}
+
+
+            <!-- Welcome -->
+            <section class="admin-welcome">
+
+                <div>
+
+                    <span class="eyebrow">
+                        MANAGEMENT OVERVIEW
+                    </span>
+
+                    <h2>
+                        Welcome to <span>StayEase.</span>
+                    </h2>
+
+                    <p>
+                        Here's an overview of your hotel reservation
+                        platform and its current activity.
+                    </p>
+
+                </div>
+
+                <a href="{{ url_for('admin.add_hotel') }}"
+                   class="btn btn-gold">
+                    + Add New Hotel
+                </a>
+
+            </section>
+
+
+            <!-- Statistics -->
+            <section class="admin-stats-grid">
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Total Hotels</span>
+                        <span class="stat-icon">⌂</span>
+                    </div>
+
+                    <strong>{{ stats.total_hotels }}</strong>
+
+                    <span class="stat-description">
+                        Properties in the system
+                    </span>
+
+                </article>
+
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Total Rooms</span>
+                        <span class="stat-icon">▤</span>
+                    </div>
+
+                    <strong>{{ stats.total_rooms }}</strong>
+
+                    <span class="stat-description">
+                        Registered hotel rooms
+                    </span>
+
+                </article>
+
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Total Bookings</span>
+                        <span class="stat-icon">▣</span>
+                    </div>
+
+                    <strong>{{ stats.total_bookings }}</strong>
+
+                    <span class="stat-description">
+                        All reservation records
+                    </span>
+
+                </article>
+
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Customers</span>
+                        <span class="stat-icon">♙</span>
+                    </div>
+
+                    <strong>{{ stats.total_customers }}</strong>
+
+                    <span class="stat-description">
+                        Registered customers
+                    </span>
+
+                </article>
+
+            </section>
+
+
+            <!-- Booking Value and Status -->
+            <section class="admin-overview-grid">
+
+                <article class="admin-panel booking-value-panel">
+
+                    <span class="panel-label">
+                        CONFIRMED BOOKING VALUE
+                    </span>
+
+                    <h2>
+                        ₹{{ "%.2f"|format(stats.booking_value) }}
+                    </h2>
+
+                    <p>
+                        Total value of confirmed reservations.
+                        This is not collected payment revenue.
+                    </p>
+
+                </article>
+
+
+                <article class="admin-panel booking-status-panel">
+
+                    <span class="panel-label">
+                        BOOKING OVERVIEW
+                    </span>
+
+                    <div class="booking-status-row">
+
+                        <span>Confirmed Bookings</span>
+
+                        <strong>
+                            {{ stats.confirmed_bookings }}
+                        </strong>
+
+                    </div>
+
+                    <div class="booking-status-row">
+
+                        <span>Total Reservations</span>
+
+                        <strong>
+                            {{ stats.total_bookings }}
+                        </strong>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- Recent Bookings -->
+            <section class="admin-panel recent-bookings-panel">
+
+                <div class="admin-panel-heading">
+
+                    <div>
+
+                        <span class="panel-label">
+                            LATEST ACTIVITY
+                        </span>
+
+                        <h2>Recent Bookings</h2>
+
+                    </div>
+
+                    <a href="{{ url_for('admin.manage_bookings') }}"
+                       class="text-link">
+                        View All →
+                    </a>
+
+                </div>
+
+
+                <div class="admin-table-wrapper">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Customer</th>
+                                <th>Hotel</th>
+                                <th>Check-in</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for booking in recent_bookings %}
+
+                                <tr>
+
+                                    <td>
+                                        <strong>
+                                            {{ booking.user_name }}
+                                        </strong>
+
+                                        <small>
+                                            {{ booking.user_email }}
+                                        </small>
+                                    </td>
+
+                                    <td>
+                                        {{ booking.hotel_name }}
+                                    </td>
+
+                                    <td>
+                                        {{ booking.check_in }}
+                                    </td>
+
+                                    <td>
+                                        ₹{{ "%.2f"|format(booking.total_price|float) }}
+                                    </td>
+
+                                    <td>
+
+                                        <span class="status-badge {{ booking.status }}">
+                                            {{ booking.status|title }}
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            {% else %}
+
+                                <tr>
+                                    <td colspan="5" class="table-empty">
+                                        No bookings have been made yet.
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+        
+
+
+            <!-- Footer -->
+            <footer class="admin-footer">
+                © 2026 StayEase Admin Panel. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

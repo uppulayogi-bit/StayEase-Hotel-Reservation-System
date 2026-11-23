@@ -1,0 +1,276 @@
+
+[
+    {
+        "id": "room-001",
+        "hotel_id": "hotel-001",
+        "name": "Deluxe King Room",
+        "price": 4500,
+        "capacity": 2,
+        "description": "An elegant room featuring a king-size bed, premium furnishings, modern bathroom, and comfortable interiors.",
+        "status": "active"
+    },
+    {
+        "id": "room-002",
+        "hotel_id": "hotel-001",
+        "name": "Executive Suite",
+        "price": 7500,
+        "capacity": 3,
+        "description": "A spacious executive suite with a separate living area, luxury bedding, and premium amenities.",
+        "status": "active"
+    },
+    {
+        "id": "room-003",
+        "hotel_id": "hotel-002",
+        "name": "Ocean View Room",
+        "price": 5500,
+        "capacity": 2,
+        "description": "Relax in a beautiful room with coastal-inspired interiors and a refreshing ocean view.",
+        "status": "active"
+    },
+    {
+        "id": "room-004",
+        "hotel_id": "hotel-002",
+        "name": "Premium Beach Suite",
+        "price": 9500,
+        "capacity": 4,
+        "description": "A premium suite with spacious interiors, elegant furnishings, and an exclusive resort experience.",
+        "status": "active"
+    },
+    {
+        "id": "room-005",
+        "hotel_id": "hotel-003",
+        "name": "Superior Business Room",
+        "price": 4000,
+        "capacity": 2,
+        "description": "A comfortable business room with a dedicated workspace, modern interiors, and high-speed Wi-Fi.",
+        "status": "active"
+    },
+    {
+        "id": "room-006",
+        "hotel_id": "hotel-003",
+        "name": "Luxury Club Suite",
+        "price": 7000,
+        "capacity": 3,
+        "description": "An upscale suite with refined furnishings, spacious accommodation, and premium guest facilities.",
+        "status": "active"
+    },
+    {
+        "id": "room-007",
+        "hotel_id": "hotel-004",
+        "name": "Mountain View Cottage",
+        "price": 5000,
+        "capacity": 2,
+        "description": "A peaceful cottage with beautiful mountain views, warm interiors, and a relaxing atmosphere.",
+        "status": "active"
+    },
+    {
+        "id": "room-008",
+        "hotel_id": "hotel-004",
+        "name": "Family Mountain Suite",
+        "price": 8500,
+        "capacity": 5,
+        "description": "A spacious family suite with scenic views, comfortable beds, and generous living space.",
+        "status": "active"
+    },
+    {
+        "id": "room-009",
+        "hotel_id": "hotel-005",
+        "name": "Classic City Room",
+        "price": 4800,
+        "capacity": 2,
+        "description": "A stylish city room with modern furnishings, comfortable bedding, and convenient amenities.",
+        "status": "active"
+    },
+    {
+        "id": "room-010",
+        "hotel_id": "hotel-005",
+        "name": "Premium Skyline Suite",
+        "price": 9000,
+        "capacity": 3,
+        "description": "A sophisticated suite with contemporary interiors, spacious accommodation, and impressive city views.",
+        "status": "active"
+    },
+    {
+        "id": "room-011",
+        "hotel_id": "hotel-006",
+        "name": "Garden View Room",
+        "price": 4200,
+        "capacity": 2,
+        "description": "A relaxing room surrounded by peaceful garden scenery with comfortable interiors.",
+        "status": "active"
+    },
+    {
+        "id": "room-012",
+        "hotel_id": "hotel-006",
+        "name": "Royal Wellness Suite",
+        "price": 8000,
+        "capacity": 4,
+        "description": "A spacious luxury suite offering elegant accommodation and a relaxing wellness-inspired experience.",
+        "status": "active"
+    }
+
+,
+{
+    "id": "room-013",
+    "hotel_id": "hotel-007",
+    "name": "Royal Lake View Room",
+    "price": 6500,
+    "capacity": 2,
+    "description": "An elegant room with beautiful lake views and refined interiors.",
+    "status": "active"
+},
+{
+    "id": "room-014",
+    "hotel_id": "hotel-007",
+    "name": "Presidential Lake Suite",
+    "price": 11000,
+    "capacity": 4,
+    "description": "A luxurious suite with spacious interiors and stunning lake views.",
+    "status": "active"
+},
+{
+    "id": "room-015",
+    "hotel_id": "hotel-008",
+    "name": "Coastal Deluxe Room",
+    "price": 4500,
+    "capacity": 2,
+    "description": "A comfortable coastal room with refreshing interiors.",
+    "status": "active"
+},
+{
+    "id": "room-016",
+    "hotel_id": "hotel-008",
+    "name": "Premium Sea View Suite",
+    "price": 8500,
+    "capacity": 4,
+    "description": "A spacious suite with beautiful sea views and premium facilities.",
+    "status": "active"
+},
+{
+    "id": "room-017",
+    "hotel_id": "hotel-009",
+    "name": "Metropolitan Deluxe Room",
+    "price": 5000,
+    "capacity": 2,
+    "description": "A modern city room with elegant furnishings and comfortable accommodation.",
+    "status": "active"
+},
+{
+    "id": "room-018",
+    "hotel_id": "hotel-009",
+    "name": "Metropolitan Executive Suite",
+    "price": 9000,
+    "capacity": 3,
+    "description": "An executive suite with premium interiors and a separate living area.",
+    "status": "active"
+},
+{
+    "id": "room-019",
+    "hotel_id": "hotel-010",
+    "name": "Pinewood Deluxe Room",
+    "price": 4800,
+    "capacity": 2,
+    "description": "A cozy mountain room with warm interiors and scenic surroundings.",
+    "status": "active"
+},
+{
+    "id": "room-020",
+    "hotel_id": "hotel-010",
+    "name": "Pinewood Family Suite",
+    "price": 8500,
+    "capacity": 4,
+    "description": "A spacious family suite with beautiful mountain surroundings.",
+    "status": "active"
+},
+{
+    "id": "room-021",
+    "hotel_id": "hotel-011",
+    "name": "Coral Deluxe Room",
+    "price": 6000,
+    "capacity": 2,
+    "description": "A tropical-inspired room with relaxing interiors and coastal charm.",
+    "status": "active"
+},
+{
+    "id": "room-022",
+    "hotel_id": "hotel-011",
+    "name": "Coral Premium Suite",
+    "price": 10500,
+    "capacity": 4,
+    "description": "A luxurious island suite with spacious accommodation and premium comfort.",
+    "status": "active"
+},
+{
+    "id": "room-023",
+    "hotel_id": "hotel-012",
+    "name": "Heritage Classic Room",
+    "price": 5200,
+    "capacity": 2,
+    "description": "A heritage-inspired room with traditional design and modern comforts.",
+    "status": "active"
+},
+{
+    "id": "room-024",
+    "hotel_id": "hotel-012",
+    "name": "Royal Heritage Suite",
+    "price": 9500,
+    "capacity": 4,
+    "description": "An elegant suite inspired by royal architecture and traditional hospitality.",
+    "status": "active"
+},
+{
+    "id": "room-025",
+    "hotel_id": "hotel-013",
+    "name": "Crystal Deluxe Room",
+    "price": 5000,
+    "capacity": 2,
+    "description": "A contemporary room with stylish interiors and premium amenities.",
+    "status": "active"
+},
+{
+    "id": "room-026",
+    "hotel_id": "hotel-013",
+    "name": "Crystal Grand Suite",
+    "price": 9500,
+    "capacity": 4,
+    "description": "A premium suite with spacious accommodation and elegant furnishings.",
+    "status": "active"
+},
+{
+    "id": "room-027",
+    "hotel_id": "hotel-014",
+    "name": "Silver Oak Deluxe Room",
+    "price": 4500,
+    "capacity": 2,
+    "description": "A peaceful room with modern furnishings and comfortable interiors.",
+    "status": "active"
+},
+{
+    "id": "room-028",
+    "hotel_id": "hotel-014",
+    "name": "Silver Oak Premium Suite",
+    "price": 8000,
+    "capacity": 3,
+    "description": "A sophisticated suite with spacious interiors and premium facilities.",
+    "status": "active"
+},
+{
+    "id": "room-029",
+    "hotel_id": "hotel-015",
+    "name": "Emerald Valley Deluxe Room",
+    "price": 4800,
+    "capacity": 2,
+    "description": "A relaxing room surrounded by beautiful mountain scenery.",
+    "status": "active"
+},
+{
+    "id": "room-030",
+    "hotel_id": "hotel-015",
+    "name": "Emerald Luxury Suite",
+    "price": 9000,
+    "capacity": 4,
+    "description": "A luxurious mountain suite with spacious interiors and premium comfort.",
+    "status": "active"
+}
+
+]

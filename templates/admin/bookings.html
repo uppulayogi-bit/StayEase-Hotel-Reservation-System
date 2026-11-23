@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Bookings | StayEase Admin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+
+            <a href="{{ url_for('home') }}" class="brand admin-brand">
+                Stay<span>Ease</span><small>.</small>
+            </a>
+
+            <div class="admin-profile">
+                <div class="admin-avatar">A</div>
+                <div>
+                    <strong>Administrator</strong>
+                    <span>System Manager</span>
+                </div>
+            </div>
+
+            <span class="sidebar-label">MAIN MENU</span>
+
+            <nav class="admin-nav">
+
+                <a href="{{ url_for('admin.dashboard') }}"
+                   class="admin-nav-link">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="{{ url_for('admin.manage_hotels') }}"
+                   class="admin-nav-link">
+                    <span>⌂</span> Hotels
+                </a>
+
+                <a href="{{ url_for('admin.manage_rooms') }}"
+                   class="admin-nav-link">
+                    <span>▤</span> Rooms
+                </a>
+
+                <a href="{{ url_for('admin.manage_bookings') }}"
+                   class="admin-nav-link active">
+                    <span>▣</span> Bookings
+                </a>
+
+                <a href="{{ url_for('admin.manage_customers') }}"
+                   class="admin-nav-link">
+                    <span>♙</span> Customers
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="{{ url_for('home') }}"
+                   class="admin-nav-link">
+                    <span>↗</span> View Website
+                </a>
+
+                <form action="{{ url_for('admin.admin_logout') }}"
+                      method="POST">
+
+                    <button type="submit"
+                            class="admin-logout-button">
+                        <span>⇥</span> Sign Out
+                    </button>
+
+                </form>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="admin-main">
+
+            <header class="admin-topbar">
+
+                <div>
+                    <span class="admin-date-label">
+                        RESERVATION MANAGEMENT
+                    </span>
+
+                    <h1>Bookings</h1>
+                </div>
+
+                <div class="admin-topbar-right">
+                    <span class="admin-status-indicator"></span>
+                    Reservation Records
+                </div>
+
+            </header>
+
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% for category, message in messages %}
+
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endwith %}
+
+
+            <!-- Introduction -->
+            <section class="admin-welcome">
+
+                <div>
+
+                    <span class="eyebrow">
+                        STAYEASE RESERVATIONS
+                    </span>
+
+                    <h2>
+                        Manage every <span>reservation.</span>
+                    </h2>
+
+                    <p>
+                        Review customer bookings, monitor reservation
+                        details, and update booking statuses.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- Booking Statistics -->
+            <section class="admin-stats-grid">
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Total Bookings</span>
+                        <span class="stat-icon">▣</span>
+                    </div>
+
+                    <strong>{{ bookings|length }}</strong>
+
+                    <span class="stat-description">
+                        All reservation records
+                    </span>
+
+                </article>
+
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Confirmed</span>
+                        <span class="stat-icon">✓</span>
+                    </div>
+
+                    <strong>
+                        {{ bookings|selectattr('status', 'equalto', 'confirmed')|list|length }}
+                    </strong>
+
+                    <span class="stat-description">
+                        Confirmed reservations
+                    </span>
+
+                </article>
+
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Cancelled</span>
+                        <span class="stat-icon">×</span>
+                    </div>
+
+                    <strong>
+                        {{ bookings|selectattr('status', 'equalto', 'cancelled')|list|length }}
+                    </strong>
+
+                    <span class="stat-description">
+                        Cancelled reservations
+                    </span>
+
+                </article>
+
+            </section>
+
+
+            <!-- Bookings Table -->
+            <section class="admin-panel recent-bookings-panel">
+
+                <div class="admin-panel-heading">
+
+                    <div>
+                        <span class="panel-label">
+                            CUSTOMER RESERVATION RECORDS
+                        </span>
+
+                        <h2>All Bookings</h2>
+                    </div>
+
+                    <span class="results-count">
+                        {{ bookings|length }} reservation(s)
+                    </span>
+
+                </div>
+
+
+                <div class="admin-table-wrapper">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Customer</th>
+                                <th>Hotel & Room</th>
+                                <th>Stay Dates</th>
+                                <th>Guests</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Update Status</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for booking in bookings %}
+
+                                <tr>
+
+                                    <!-- Customer -->
+                                    <td>
+                                        <strong>
+                                            {{ booking.user_name }}
+                                        </strong>
+
+                                        <small>
+                                            {{ booking.user_email }}
+                                        </small>
+                                    </td>
+
+
+                                    <!-- Hotel and Room -->
+                                    <td>
+                                        <strong>
+                                            {{ booking.hotel_name }}
+                                        </strong>
+
+                                        <small>
+                                            {{ booking.room_name }}
+                                        </small>
+                                    </td>
+
+
+                                    <!-- Dates -->
+                                    <td>
+                                        <strong>
+                                            {{ booking.check_in }}
+                                        </strong>
+
+                                        <small>
+                                            To {{ booking.check_out }}
+                                        </small>
+                                    </td>
+
+
+                                    <!-- Guests -->
+                                    <td>
+                                        {{ booking.guests }}
+                                    </td>
+
+
+                                    <!-- Amount -->
+                                    <td>
+                                        <strong class="booking-amount">
+                                            ₹{{ "%.2f"|format(booking.total_price|float) }}
+                                        </strong>
+                                    </td>
+
+
+                                    <!-- Status -->
+                                    <td>
+                                        <span class="status-badge {{ booking.status }}">
+                                            {{ booking.status|title }}
+                                        </span>
+                                    </td>
+
+
+                                    <!-- Update Status -->
+                                    <td>
+
+                                        <form
+                                            method="POST"
+                                            action="{{ url_for(
+                                                'admin.update_booking',
+                                                booking_id=booking.id
+                                            ) }}"
+                                            class="booking-status-form"
+                                        >
+
+                                            <select
+                                                name="status"
+                                                class="form-control status-select"
+                                                aria-label="Booking status"
+                                            >
+
+                                                <option
+                                                    value="confirmed"
+                                                    {% if booking.status == 'confirmed' %}selected{% endif %}
+                                                >
+                                                    Confirmed
+                                                </option>
+
+                                                <option
+                                                    value="cancelled"
+                                                    {% if booking.status == 'cancelled' %}selected{% endif %}
+                                                >
+                                                    Cancelled
+                                                </option>
+
+                                            </select>
+
+                                            <button type="submit"
+                                                    class="btn btn-small btn-primary">
+                                                Update
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                </tr>
+
+                            {% else %}
+
+                                <tr>
+
+                                    <td colspan="7" class="table-empty">
+                                        No reservations have been made yet.
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- Information -->
+            <section class="admin-panel booking-admin-note">
+
+                <span class="panel-label">
+                    ADMINISTRATION NOTE
+                </span>
+
+                <p>
+                    Updating a reservation to cancelled releases its
+                    room for future bookings. Confirmed reservations
+                    remain subject to room availability checks.
+                </p>
+
+            </section>
+
+
+            <footer class="admin-footer">
+                © 2026 StayEase Admin Panel. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

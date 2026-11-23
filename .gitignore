@@ -1,0 +1,44 @@
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Environment variables and secrets
+.env
+
+# Flask instance files
+instance/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.log
+
+# Test and coverage files
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local database backups
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploaded temporary files
+static/uploads/*
+!static/uploads/.gitkeep

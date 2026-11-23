@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | StayEase</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="auth-body">
+
+    <main class="auth-page">
+
+        <!-- Left Visual Panel -->
+        <section class="auth-visual admin-login-visual">
+
+            <a href="{{ url_for('home') }}" class="brand auth-brand">
+                Stay<span>Ease</span><small>.</small>
+            </a>
+
+            <div class="auth-visual-content">
+
+                <span class="eyebrow">
+                    ADMINISTRATION PORTAL
+                </span>
+
+                <h1>
+                    Manage every<br>
+                    stay with<br>
+                    <span>confidence.</span>
+                </h1>
+
+                <p>
+                    Access your administration workspace to manage
+                    properties, rooms, reservations, and customers
+                    from one place.
+                </p>
+
+            </div>
+
+            <div class="auth-visual-bottom">
+                STAYEASE PROPERTY MANAGEMENT.
+            </div>
+
+        </section>
+
+
+        <!-- Right Login Panel -->
+        <section class="auth-content">
+
+            <div class="auth-form-wrapper">
+
+                <a href="{{ url_for('home') }}"
+                   class="auth-mobile-logo brand">
+                    Stay<span>Ease</span><small>.</small>
+                </a>
+
+                <span class="eyebrow dark-eyebrow">
+                    SECURE ADMIN ACCESS
+                </span>
+
+                <h2 class="auth-title">
+                    Admin <span>sign in.</span>
+                </h2>
+
+                <p class="auth-subtitle">
+                    Sign in to access your StayEase management dashboard.
+                </p>
+
+
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+
+                    {% for category, message in messages %}
+
+                        <div class="flash-message {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endwith %}
+
+
+                <!-- Admin Login Form -->
+                <form method="POST"
+                      action="{{ url_for('admin.admin_login') }}"
+                      class="auth-form">
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Administrator Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="admin@stayease.com"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Administrator Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-control"
+                            placeholder="Enter your admin password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button type="submit"
+                            class="btn btn-primary auth-submit">
+                        Access Dashboard →
+                    </button>
+
+                </form>
+
+
+                <div class="auth-footer">
+                    <p>
+                        Authorized administrators only.
+                    </p>
+                </div>
+
+
+                <a href="{{ url_for('home') }}"
+                   class="back-home">
+                    ← Back to StayEase website
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Rooms | StayEase Admin</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+
+            <a href="{{ url_for('home') }}" class="brand admin-brand">
+                Stay<span>Ease</span><small>.</small>
+            </a>
+
+            <div class="admin-profile">
+                <div class="admin-avatar">A</div>
+                <div>
+                    <strong>Administrator</strong>
+                    <span>System Manager</span>
+                </div>
+            </div>
+
+            <span class="sidebar-label">MAIN MENU</span>
+
+            <nav class="admin-nav">
+
+                <a href="{{ url_for('admin.dashboard') }}"
+                   class="admin-nav-link">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="{{ url_for('admin.manage_hotels') }}"
+                   class="admin-nav-link">
+                    <span>⌂</span> Hotels
+                </a>
+
+                <a href="{{ url_for('admin.manage_rooms') }}"
+                   class="admin-nav-link active">
+                    <span>▤</span> Rooms
+                </a>
+
+                <a href="{{ url_for('admin.manage_bookings') }}"
+                   class="admin-nav-link">
+                    <span>▣</span> Bookings
+                </a>
+
+                <a href="{{ url_for('admin.manage_customers') }}"
+                   class="admin-nav-link">
+                    <span>♙</span> Customers
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="{{ url_for('home') }}"
+                   class="admin-nav-link">
+                    <span>↗</span> View Website
+                </a>
+
+                <form action="{{ url_for('admin.admin_logout') }}"
+                      method="POST">
+
+                    <button type="submit"
+                            class="admin-logout-button">
+                        <span>⇥</span> Sign Out
+                    </button>
+
+                </form>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="admin-main">
+
+            <header class="admin-topbar">
+
+                <div>
+                    <span class="admin-date-label">
+                        ROOM MANAGEMENT
+                    </span>
+
+                    <h1>Rooms</h1>
+                </div>
+
+                <a href="{{ url_for('admin.add_room') }}"
+                   class="btn btn-primary">
+                    + Add New Room
+                </a>
+
+            </header>
+
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% for category, message in messages %}
+
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endwith %}
+
+
+            <!-- Introduction -->
+            <section class="admin-welcome">
+
+                <div>
+
+                    <span class="eyebrow">
+                        ROOM INVENTORY
+                    </span>
+
+                    <h2>
+                        Manage your <span>rooms.</span>
+                    </h2>
+
+                    <p>
+                        Organize room categories, hotel assignments,
+                        guest capacity, and nightly prices.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- Statistics -->
+            <section class="admin-stats-grid">
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Total Rooms</span>
+                        <span class="stat-icon">▤</span>
+                    </div>
+
+                    <strong>{{ rooms|length }}</strong>
+
+                    <span class="stat-description">
+                        Registered room records
+                    </span>
+
+                </article>
+
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Active Rooms</span>
+                        <span class="stat-icon">✓</span>
+                    </div>
+
+                    <strong>
+                        {{ rooms|selectattr('status', 'equalto', 'active')|list|length }}
+                    </strong>
+
+                    <span class="stat-description">
+                        Rooms currently listed
+                    </span>
+
+                </article>
+
+            </section>
+
+
+            <!-- Rooms Table -->
+            <section class="admin-panel recent-bookings-panel">
+
+                <div class="admin-panel-heading">
+
+                    <div>
+                        <span class="panel-label">
+                            ROOM DIRECTORY
+                        </span>
+
+                        <h2>All Rooms</h2>
+                    </div>
+
+                    <a href="{{ url_for('admin.add_room') }}"
+                       class="text-link">
+                        + Add Room
+                    </a>
+
+                </div>
+
+
+                <div class="admin-table-wrapper">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Room</th>
+                                <th>Hotel</th>
+                                <th>Price / Night</th>
+                                <th>Capacity</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for room in rooms %}
+
+                                <tr>
+
+                                    <td>
+                                        <div class="admin-room-cell">
+
+                                            <div class="admin-room-icon">
+                                                ▤
+                                            </div>
+
+                                            <div>
+                                                <strong>{{ room.name }}</strong>
+                                                <small>ID: {{ room.id[:8] }}</small>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
+
+                                    <td>
+                                        {{ hotel_names.get(room.hotel_id, 'Unknown Hotel') }}
+                                    </td>
+
+
+                                    <td>
+                                        <strong class="booking-amount">
+                                            ₹{{ "%.2f"|format(room.get('price', 0)|float) }}
+                                        </strong>
+                                    </td>
+
+
+                                    <td>
+                                        {{ room.get('capacity', 1) }} Guests
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="status-badge {{ room.get('status', 'active') }}">
+                                            {{ room.get('status', 'active')|title }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="admin-action-buttons">
+
+                                            <a href="{{ url_for(
+                                                'admin.edit_room',
+                                                room_id=room.id
+                                            ) }}"
+                                               class="btn btn-small btn-outline">
+                                                Edit
+                                            </a>
+
+
+                                            {% if room.get('status', 'active') == 'active' %}
+
+                                                <form
+                                                    method="POST"
+                                                    action="{{ url_for(
+                                                        'admin.delete_room',
+                                                        room_id=room.id
+                                                    ) }}"
+                                                    onsubmit="return confirm('Are you sure you want to deactivate this room?');"
+                                                >
+
+                                                    <button type="submit"
+                                                            class="btn btn-small btn-danger-outline">
+                                                        Deactivate
+                                                    </button>
+
+                                                </form>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            {% else %}
+
+                                <tr>
+                                    <td colspan="6" class="table-empty">
+                                        No rooms have been added yet.
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <footer class="admin-footer">
+                © 2026 StayEase Admin Panel. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

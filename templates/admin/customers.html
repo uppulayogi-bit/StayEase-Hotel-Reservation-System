@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Customers | StayEase Admin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+
+            <a href="{{ url_for('home') }}" class="brand admin-brand">
+                Stay<span>Ease</span><small>.</small>
+            </a>
+
+            <div class="admin-profile">
+                <div class="admin-avatar">A</div>
+                <div>
+                    <strong>Administrator</strong>
+                    <span>System Manager</span>
+                </div>
+            </div>
+
+            <span class="sidebar-label">MAIN MENU</span>
+
+            <nav class="admin-nav">
+
+                <a href="{{ url_for('admin.dashboard') }}"
+                   class="admin-nav-link">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="{{ url_for('admin.manage_hotels') }}"
+                   class="admin-nav-link">
+                    <span>⌂</span> Hotels
+                </a>
+
+                <a href="{{ url_for('admin.manage_rooms') }}"
+                   class="admin-nav-link">
+                    <span>▤</span> Rooms
+                </a>
+
+                <a href="{{ url_for('admin.manage_bookings') }}"
+                   class="admin-nav-link">
+                    <span>▣</span> Bookings
+                </a>
+
+                <a href="{{ url_for('admin.manage_customers') }}"
+                   class="admin-nav-link active">
+                    <span>♙</span> Customers
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="{{ url_for('home') }}"
+                   class="admin-nav-link">
+                    <span>↗</span> View Website
+                </a>
+
+                <form action="{{ url_for('admin.admin_logout') }}"
+                      method="POST">
+
+                    <button type="submit"
+                            class="admin-logout-button">
+                        <span>⇥</span> Sign Out
+                    </button>
+
+                </form>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="admin-main">
+
+            <header class="admin-topbar">
+
+                <div>
+                    <span class="admin-date-label">
+                        CUSTOMER MANAGEMENT
+                    </span>
+
+                    <h1>Customers</h1>
+                </div>
+
+                <div class="admin-topbar-right">
+                    <span class="admin-status-indicator"></span>
+                    Customer Directory
+                </div>
+
+            </header>
+
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% for category, message in messages %}
+
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endwith %}
+
+
+            <!-- Introduction -->
+            <section class="admin-welcome">
+
+                <div>
+
+                    <span class="eyebrow">
+                        STAYEASE CUSTOMER DIRECTORY
+                    </span>
+
+                    <h2>
+                        Know your <span>guests.</span>
+                    </h2>
+
+                    <p>
+                        View registered customers and access their
+                        account information from one central location.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- Customer Statistics -->
+            <section class="admin-stats-grid">
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Total Customers</span>
+                        <span class="stat-icon">♙</span>
+                    </div>
+
+                    <strong>{{ customers|length }}</strong>
+
+                    <span class="stat-description">
+                        Registered customer accounts
+                    </span>
+
+                </article>
+
+
+                <article class="admin-stat-card">
+
+                    <div class="stat-card-top">
+                        <span>Customer Accounts</span>
+                        <span class="stat-icon">✓</span>
+                    </div>
+
+                    <strong>{{ customers|length }}</strong>
+
+                    <span class="stat-description">
+                        Available customer records
+                    </span>
+
+                </article>
+
+            </section>
+
+
+            <!-- Customer Directory -->
+            <section class="admin-panel">
+
+                <div class="admin-panel-heading">
+
+                    <div>
+                        <span class="panel-label">
+                            REGISTERED USERS
+                        </span>
+
+                        <h2>Customer Directory</h2>
+                    </div>
+
+                    <span class="results-count">
+                        {{ customers|length }} customer(s)
+                    </span>
+
+                </div>
+
+
+                <!-- Search -->
+                <div class="customer-search-wrapper">
+
+                    <input
+                        type="search"
+                        id="customerSearch"
+                        class="form-control customer-search"
+                        placeholder="Search by customer name or email..."
+                        aria-label="Search customers"
+                    >
+
+                </div>
+
+
+                <!-- Table -->
+                <div class="admin-table-wrapper">
+
+                    <table class="admin-table"
+                           id="customerTable">
+
+                        <thead>
+
+                            <tr>
+                                <th>Customer</th>
+                                <th>Email Address</th>
+                                <th>Account ID</th>
+                                <th>Account Type</th>
+                                <th>Account Status</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for customer in customers %}
+
+                                <tr class="customer-row">
+
+                                    <!-- Customer Name -->
+                                    <td>
+
+                                        <div class="customer-name-cell">
+
+                                            <div class="customer-avatar">
+                                                {{ customer.name[:1]|upper }}
+                                            </div>
+
+                                            <strong>
+                                                {{ customer.name }}
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- Email -->
+                                    <td>
+                                        {{ customer.email }}
+                                    </td>
+
+
+                                    <!-- Customer ID -->
+                                    <td>
+                                        <span class="customer-id">
+                                            {{ customer.id[:8] }}
+                                        </span>
+                                    </td>
+
+
+                                    <!-- Role -->
+                                    <td>
+                                        <span class="role-badge">
+                                            {{ customer.role|title }}
+                                        </span>
+                                    </td>
+
+
+                                    <!-- Status -->
+                                    <td>
+                                        <span class="status-badge confirmed">
+                                            Active
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                            {% else %}
+
+                                <tr>
+                                    <td colspan="5" class="table-empty">
+                                        No customers have registered yet.
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                    <p id="noSearchResults"
+                       class="table-empty"
+                       style="display: none;">
+                        No matching customers found.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- Information -->
+            <section class="admin-panel booking-admin-note">
+
+                <span class="panel-label">
+                    CUSTOMER DATA PRIVACY
+                </span>
+
+                <p>
+                    Customer account information is stored locally
+                    in the StayEase JSON data files. Passwords are
+                    stored as secure password hashes and are not
+                    displayed in this directory.
+                </p>
+
+            </section>
+
+
+            <footer class="admin-footer">
+                © 2026 StayEase Admin Panel. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- Customer Search -->
+    <script>
+        const searchInput = document.getElementById("customerSearch");
+        const customerRows = document.querySelectorAll(".customer-row");
+        const noResults = document.getElementById("noSearchResults");
+
+        searchInput.addEventListener("input", function () {
+
+            const searchValue = this.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            customerRows.forEach(function (row) {
+
+                const customerName = row.cells[0].innerText.toLowerCase();
+                const customerEmail = row.cells[1].innerText.toLowerCase();
+
+                const matches =
+                    customerName.includes(searchValue) ||
+                    customerEmail.includes(searchValue);
+
+                row.style.display = matches ? "" : "none";
+
+                if (matches) {
+                    visibleCount++;
+                }
+
+            });
+
+            noResults.style.display =
+                visibleCount === 0 && customerRows.length > 0
+                ? "block"
+                : "none";
+
+        });
+    </script>
+
+</body>
+</html>
